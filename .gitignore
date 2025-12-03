@@ -1,0 +1,67 @@
+# Python-specific ignores
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.git
+.mypy_cache/
+.pytest_cache/
+.hypothesis/
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.staging
+
+# Docker ignores (if applicable)
+.dockerignore
+
+# Ollama data (large model files, SSH keys, history)
+ollama-data/models/
+ollama-data/history
+ollama-data/id_ed25519
+ollama-data/id_ed25519.pub
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Build artifacts (if any)
+dist/
+build/
+*.egg-info/
