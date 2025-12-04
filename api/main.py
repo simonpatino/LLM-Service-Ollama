@@ -1,3 +1,5 @@
+from select import select
+from api.models.user import Users
 from fastapi import FastAPI
 import httpx
 from pydantic import BaseModel
@@ -7,7 +9,8 @@ from collections.abc import AsyncIterator
 
 from api.core.database import create_db_and_tables
 from api.routers import auth, chat
-
+from api.core.database import engine
+from sqlmodel import Session, select
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
@@ -31,3 +34,16 @@ app.include_router(chat.router)
 @app.get("/", response_model=dict, tags=["root"])
 def root():
     return {"message": "LLM Service with Ollama is running."}
+
+@app.get("/health", response_model=dict, tags=["root"])
+def health_check():
+    with Session(engine) as session:
+        session.exec(select(1)).first()
+
+
+        if session:
+            return {"status": "healthy"}
+        else:
+            return {"status": "unhealthy"}
+        
+    

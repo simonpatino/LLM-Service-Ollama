@@ -11,7 +11,7 @@ router = APIRouter(tags=["auth"])
 
 
 @router.post("/register", response_model=Users)
-def create_user(user_data: UserCreate) -> Users:
+def create_user(user_data: UserCreate) -> dict:
     """Register a new user."""
     with Session(engine) as session:
         existing_user = session.exec(
@@ -27,7 +27,7 @@ def create_user(user_data: UserCreate) -> Users:
         session.commit()
         session.refresh(user)
 
-        return user
+        return {"id": user.id, "username": user.username}
 
 
 @router.post("/login", response_model=TokenResponse)

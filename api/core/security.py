@@ -7,9 +7,9 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from sqlmodel import Session, select
 
-from app.core.config import settings
-from app.core.database import engine
-from app.models.user import Users
+from api.core.config import settings
+from api.core.database import engine
+from api.models.user import Users
 
 # Password hashing context
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

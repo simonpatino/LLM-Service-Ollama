@@ -1,18 +1,42 @@
-services: 
+services:
   ollama:
     image: ollama/ollama:latest
 
-    ports: 
+    ports:
       - 11434:11434
 
-  api: 
-    build: ./api 
-    ports: 
+  api:
+    build: ./api
+    ports:
       - 8000:8000
-    depends_on: 
+    depends_on:
       - ollama
+      - db
+
     develop:
       watch:
-      - action: sync
-        path: ./api
-        target: /app
+        - action: sync
+          path: ./api
+          target: /app
+
+    environment:
+      - JWT_SECRET=your_jwt_secret_key_here
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=user
+      - POSTGRES_DB=llm_service
+      - POSTGRES_SERVER=db
+      - POSTGRES_PORT=5432
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: llm_service
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
