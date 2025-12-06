@@ -1,9 +1,4 @@
-from select import select
-from api.models.user import Users
 from fastapi import FastAPI
-import httpx
-from pydantic import BaseModel
-import asyncio
 from contextlib import asynccontextmanager
 from collections.abc import AsyncIterator
 

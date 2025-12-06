@@ -17,7 +17,7 @@ services:
       watch:
         - action: sync
           path: ./api
-          target: /app
+          target: /app/api
 
     environment:
       - JWT_SECRET=your_jwt_secret_key_here
