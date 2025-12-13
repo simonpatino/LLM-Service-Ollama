@@ -80,6 +80,7 @@ async def clear_history(
     session.commit()
     return {"message": "Chat history cleared."}
 
+
 @router.get("/history", response_model=dict)
 async def get_history(
     current_user: Users = Depends(get_current_user),
@@ -92,8 +93,3 @@ async def get_history(
             {"prompt": chat.prompt, "response": chat.response} for chat in history
         ]
     }
-
-
-
-
-

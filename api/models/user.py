@@ -45,4 +45,5 @@ class TokenResponse(BaseModel):
 
 class ChatRequest(BaseModel):
     """Schema for chat request."""
+
     prompt: str
