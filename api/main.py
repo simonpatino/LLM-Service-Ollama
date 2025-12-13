@@ -7,6 +7,7 @@ from api.routers import auth, chat, embedding
 from api.core.database import engine
 from sqlmodel import Session, select
 
+
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
     """Application lifespan: startup and shutdown events."""
@@ -31,15 +32,13 @@ app.include_router(embedding.router)
 def root():
     return {"message": "LLM Service with Ollama is running."}
 
+
 @app.get("/health", response_model=dict, tags=["root"])
 def health_check():
     with Session(engine) as session:
         session.exec(select(1)).first()
 
-
         if session:
             return {"status": "healthy"}
         else:
             return {"status": "unhealthy"}
-        
-    

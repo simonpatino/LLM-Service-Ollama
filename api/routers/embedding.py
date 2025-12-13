@@ -23,6 +23,7 @@ async def get_embedding(
         response = await client.post(URL_OLLAMA_EMBEDDING, json=payload)
         data = response.json()
 
-        return {"vector_length": len(data.get("embeddings", [])[0])
-                , "embeddings": data.get("embeddings", [])}
-
+        return {
+            "vector_length": len(data.get("embeddings", [])[0]),
+            "embeddings": data.get("embeddings", []),
+        }
