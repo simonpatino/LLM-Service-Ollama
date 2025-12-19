@@ -6,5 +6,5 @@ class postDocument(BaseModel):
 
 class searchQuery(BaseModel):
     '''Schema for search query.'''
-    query: str
+    text: str
     k: int

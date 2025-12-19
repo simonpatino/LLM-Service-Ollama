@@ -1,7 +1,7 @@
 from http.client import HTTPException
 from api.models.vector import postDocument, searchQuery
 from fastapi import APIRouter, Depends
-from api.models.security import get_current_user, Users
+from api.core.security import get_current_user, Users
 import faiss
 import numpy as np
 import httpx
@@ -21,12 +21,12 @@ class FAISSStore:
         self.documents = []
 
     def add(self, embedding: list[float], text: str):
-        vector = np.array(embedding).astype("float32")
+        vector = np.array([embedding]).astype("float32")
         self.index.add(vector)
         self.documents.append(text)
 
     def search(self, query_vector: list[float], k: int):
-        vector = np.array(query_vector).astype("float32")
+        vector = np.array([query_vector]).astype("float32")
         _, I = self.index.search(vector, k)
         result = []
 
@@ -71,6 +71,6 @@ async def add_text(
 async def search(
     query: searchQuery, current_user: Users = Depends(get_current_user)
 ) -> dict:
-    vector = await get_embedding_from_ollama(query.query)
+    vector = await get_embedding_from_ollama(query.text)
     results = vector_db.search(vector, query.k)
-    return {"query": query.query, "results": results}
+    return {"query": query.text, "results": results}

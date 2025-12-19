@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from collections.abc import AsyncIterator
 
 from api.core.database import create_db_and_tables
-from api.routers import auth, chat, embedding
+from api.routers import auth, chat, embedding, vector_store
 from api.core.database import engine
 from sqlmodel import Session, select
 
@@ -26,6 +26,7 @@ app = FastAPI(
 app.include_router(auth.router)
 app.include_router(chat.router)
 app.include_router(embedding.router)
+app.include_router(vector_store.router)
 
 
 @app.get("/", response_model=dict, tags=["root"])
