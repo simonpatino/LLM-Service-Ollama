@@ -8,3 +8,4 @@ class searchQuery(BaseModel):
     '''Schema for search query.'''
     text: str
     k: int
+
