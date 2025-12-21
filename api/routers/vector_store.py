@@ -141,3 +141,21 @@ async def ask_vector_store(
         session.refresh(new_chat)
 
         return {"response": ai_response}
+    
+
+@router.post("/clear_history", response_model=dict)
+async def clear_history(
+    current_user: Users = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
+    statement = select(ChatHistory).where(ChatHistory.user_id == current_user.id)
+    history = session.exec(statement).all()
+
+    for chat in history:
+        session.delete(chat)
+
+    session.commit()
+
+    return {"message": "Chat history cleared."}
+
+
